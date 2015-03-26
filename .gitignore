@@ -4,6 +4,9 @@
 # phpstorm project files
 .idea
 
+# vagrant
+.vagrant
+
 # netbeans project files
 nbproject
 
