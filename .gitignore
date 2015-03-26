@@ -34,3 +34,4 @@ phpunit.phar
 
 # nodejs modules
 /watch-script/node_modules
+/backend/web/static/watch.js
