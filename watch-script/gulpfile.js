@@ -15,5 +15,5 @@ gulp.task('default', function() {
 	gulp.src(jsFiles)
 		.pipe(concat({path: 'watch.js'}))
 		.pipe(uglify())
-		.pipe(gulp.dest('../backend/web/static/'))
+		.pipe(gulp.dest('../backend/web/static/'));
 });
