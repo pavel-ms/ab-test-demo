@@ -32,6 +32,7 @@ class m150327_070813_db_creation extends Migration
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 				`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
 				`updated_at` DATETIME,
+				`name` varchar(255) NOT NULL,
 				`user_id` int(11),
 				`bootstrap_url` varchar(255) NOT NULL,
 				`a_url` varchar(255) NOT NULL,
