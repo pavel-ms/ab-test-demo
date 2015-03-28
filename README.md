@@ -1,52 +1,17 @@
-Yii 2 Advanced Application Template
-===================================
+##Тестовое задание
+[ТЗ](https://docs.google.com/document/d/1rtdVubP_npJR5Q_u6CPBuG_O3bbZiir39DeEt_V_eVQ/edit?usp=sharing "Тех Задание")
+Задание сделанно на основе yii2-advanced-template.
+Основное приложение - backend
+Приложение для тестов (куда я встраивал скрипт отслеживания) - frontend.
 
-Yii 2 Advanced Application Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+##Технические подробности
+При создании теста пользователю предлогается установить скрипт на сайт. [Скрипт для вставки](https://github.com/pavel-ms/ab-test-demo/blob/master/backend/widgets/views/watchScript.php) содержит в себе id созданного теста, по которому получает необходимые настройки.
+Далее сравнивая url пользователя с url из настроек, скрипт редиректит пользователя к одной из страниц AB-теста (которые были заданы в админке при создании теста) и отправляет данные на [контроллер для сбора аналитики](https://github.com/pavel-ms/ab-test-demo/blob/master/backend/controllers/AnalyticsController.php). Сам [скрипт отслеживания](https://github.com/pavel-ms/ab-test-demo/blob/master/watch-script/main.js) использует jsonp и написан на js c применением библиотек [Q](https://github.com/kriskowal/q) и [Cookies.js](https://github.com/ScottHamper/Cookies)(в глобальную область библиотеки не экспортируется, сборка и минификация с помощью [Gulp](http://gulpjs.com/)).
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+Для хранения данных используется MySQL, база данных была создана с помощью стандартного механизма миграций Yii2. [Вот код](https://github.com/pavel-ms/ab-test-demo/tree/master/console/migrations)
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
-
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-advanced/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
-
-DIRECTORY STRUCTURE
--------------------
-
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-tests                    contains various tests for the advanced application
-    codeception/         contains tests developed with Codeception PHP Testing Framework
-```
+## Screenshots
+Вход в приложение - http://imagy.me/ej8pk94tdk
+Главная страница - http://imagy.me/va2hc3o3i6
+Создание теста - http://imagy.me/cejpxclpmm
+Просмотр созданного теста - http://imagy.me/4f4tv7e8o0 (тут же аналитика)
