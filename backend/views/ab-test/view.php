@@ -45,6 +45,29 @@ use yii\helpers\Html;
 
 </div>
 
+<h3>Аналитика</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Вариант страницы</th>
+            <th>Показы страницы</th>
+            <th>Достижение успеха</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>A</td>
+            <td><?= $analytics['show']['a']; ?></td>
+            <td><?= $analytics['success']['a']; ?></td>
+        </tr>
+        <tr>
+            <td>B</td>
+            <td><?= $analytics['show']['b']; ?></td>
+            <td><?= $analytics['success']['b']; ?></td>
+        </tr>
+    </tbody>
+</table>
+
 <h3>Скрипт отслеживания для вставки на страницу</h3>
 <div class="well">
 	<?=

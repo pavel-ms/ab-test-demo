@@ -70,6 +70,9 @@ AppAsset::register($this);
         </div>
     </footer>
 
+    <!-- Скрипт отслеживания -->
+    <script type="application/javascript" src="//ab-test.tut/static/watch.js"></script> <script type="application/javascript"> (function(w) { if (typeof w.$__Ab_Test === "function") { w.$__ab_Test = new w.$__Ab_Test({id: 1}); } })(window); </script>
+    <!-- End скрипт отслеживания -->
     <?php $this->endBody() ?>
 </body>
 </html>

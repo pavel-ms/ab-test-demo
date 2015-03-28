@@ -11,6 +11,7 @@ namespace backend\controllers;
 
 use backend\models\AbTest;
 use backend\models\AbTestForm;
+use backend\models\Enum;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -43,7 +44,10 @@ class AbTestController extends Controller
 
 	/**
 	 * Страница просмотра теста
+     *
+     * @throws NotFoundHttpException|ForbiddenHttpException
 	 * @param $id
+     * @return string
 	 */
 	public function actionView($id)
 	{
@@ -57,6 +61,35 @@ class AbTestController extends Controller
 
 		return $this->render('view', [
 			'abTest' => $abTest,
+            'analytics' => $this->_formatAnalytics($abTest),
 		]);
 	}
+
+    /**
+     * Формируем аналитику
+     *
+     * @param AbTest $abTest
+     * @return array
+     */
+    protected function _formatAnalytics(AbTest $abTest)
+    {
+        // Получить показы сгруппированные по варианту
+        $analytics = \Yii::$app->db
+            ->createCommand('
+                SELECT count(ta.id) cnt, v.sys_name variant, at.sys_name action_type, at.id action_type_id
+                FROM test_action ta
+                  INNER JOIN enum v ON ta.variant = v.id
+                  INNER JOIN enum at ON ta.action_type = at.id
+                WHERE ta.test_id = ' . $abTest->id . '
+                GROUP BY v.id, at.id;
+            ')
+            ->queryAll();
+        $result = [];
+        foreach ($analytics as $row) {
+            $result[$row['action_type']][$row['variant']] = $row['cnt'];
+        }
+
+        return $result;
+    }
+
 }

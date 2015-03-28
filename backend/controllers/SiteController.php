@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\AbTest;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -55,7 +56,15 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $tests = AbTest::find()
+            ->where([
+                'user_id' => Yii::$app->user->id,
+            ])
+            ->all();
+        //print_r($tests);exit;
+        return $this->render('index', [
+            'tests' => $tests
+        ]);
     }
 
     public function actionLogin()

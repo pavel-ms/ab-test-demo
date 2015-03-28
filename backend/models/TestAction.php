@@ -35,6 +35,8 @@ class TestAction extends \yii\db\ActiveRecord
     {
         return [
             [['created_at', 'updated_at'], 'safe'],
+            [['created_at'], 'default', 'value' => (new \DateTime())->format('Y-m-d H:i:s'), 'on' => 'insert'],
+            [['updated_at'], 'default', 'value' => (new \DateTime())->format('Y-m-d H:i:s'), 'on' => 'update'],
             [['action_type', 'variant', 'test_id'], 'integer'],
             [['test_id'], 'required']
         ];

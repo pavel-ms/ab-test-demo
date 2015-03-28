@@ -7,8 +7,19 @@
 	var Q = null
 		, cookie = null;
 
+    var ROOT_URL = '//ab-test.tut/analytics/';
+    var COOKIE_KEY = '$$__ab_test_variant';
+
+    var BOOTSTRAP_PAGE = 'bootstrap';
+    var VARIANT_A = 'a';
+    var VARIANT_B = 'b';
+    var SUCCESS_PAGE = 'success';
+
 	// main context of the AB-test object
 	var self = null;
+
+    // ab-test settings
+    var _settings = {};
 
 	/**
 	 * Создает и инсертит элемент script в DOM
@@ -31,7 +42,7 @@
 		script.parentNode.removeChild(script);
 	};
 
-	var _sendData = function(url, data) {
+	var _requestServer = function(url, data) {
 		var s = _createJsonpScript()
 			, params = ''
 			, dfr = Q.defer()
@@ -55,16 +66,53 @@
 			dfr.resolve(response);
 		};
 		// создадим GET строку запроса
-		for (var d in data) {
+        data['cb'] = callbackName;
+        params = _buildQueryString(data);
+		/*for (var d in data) {
 			params += (d + '=' + data[d]);
-		}
-		params === ''
+		}*/
+		/*params === ''
 			? params = 'cb=' + callbackName
-			: params += '&cb=' + callbackName;
-		s.src = url + '?' + w.encodeURI(params);
+			: params += '&cb=' + callbackName;*/
+		s.src = url + '?' + params;
 
 		return dfr.promise;
 	};
+
+    /**
+     * Хелпер, который возвращает uri от url
+     * @private
+     */
+    var _extractUri = function(url) {
+        return url
+            .replace(w.location.protocol, '')
+            .replace(':' + w.location.port, '')
+            .replace(w.location.host, '');
+    };
+
+    /**
+     * Функция хелпер - редиректит браузер на указанный url
+     * @param url
+     * @private
+     */
+    var _redirect = function(url) {
+        w.location.href = url;
+    };
+
+    /**
+     * Собираем query string из объекта
+     *
+     * @param data
+     * @return {string}
+     * @private
+     */
+    var _buildQueryString = function(data) {
+        var ret = [];
+        for (var d in data)
+            ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
+
+        return ret.join("&");
+    };
 
 	/**
 	 * Main object
@@ -89,11 +137,116 @@
 			Q = AbTest.Q;
 			cookie = AbTest.cookie;
 			self._functionsStore = [];
-			// получим данные
-			_sendData('/static/test.js', {foo: 'bar'}).then(function(res) {
-				console.dir(res);
-			});
-		}
+            self
+                .getSettings()
+                .then(function() {
+                    self.processAbTest();
+                });
+		},
+
+        /**
+         * Receives settings from server
+         */
+        getSettings: function() {
+            var dfr = Q.defer();
+            _requestServer(ROOT_URL+'settings', {id: self.id})
+                .then(function(res) {
+                    _settings = res;
+                    console.dir(_settings);
+                    dfr.resolve();
+                }, function() { dfr.reject(); });
+
+            return dfr.promise;
+        },
+
+        /**
+         * Возвращает действие, которое необходимо выполнить в зависимости от текущего url
+         * @return
+         */
+        getAction: function() {
+            var uri = w.location.pathname;
+
+            if (uri === _extractUri(_settings['bootstrap_url'])) {
+                return BOOTSTRAP_PAGE;
+            } else if (uri === _extractUri(_settings['a_url'])) {
+                return VARIANT_A;
+            } else if (uri === _extractUri(_settings['b_url'])) {
+                return VARIANT_B;
+            } else if (_extractUri(_settings['success_url'])) {
+                return SUCCESS_PAGE;
+            } else {
+                return false;
+            }
+        },
+
+        /**
+         * Process work
+         */
+        processAbTest: function() {
+            // 1. определить текущий url и если один из необходимых, то запустить соответствующию функ
+            var currentDomain = w.location.host;
+            if (_settings.bootstrap_url.indexOf(currentDomain) === -1) {
+                throw "AB-Test: Wrong domain";
+            }
+            switch(self.getAction()) {
+                case(BOOTSTRAP_PAGE):
+                    self.goToVariant();
+                    break;
+                case(VARIANT_A):
+                    self.handleVariant(VARIANT_A);
+                    break;
+                case(VARIANT_B):
+                    self.handleVariant(VARIANT_B);
+                    break;
+                case(SUCCESS_PAGE):
+                    self.handleSuccess();
+                    break;
+                default:
+                    break;
+            }
+        },
+
+        /**
+         * Отправляет к конкретному варианту
+         */
+        goToVariant: function() {
+            var max = 100
+                , min = 0
+                , variant = (Math.floor(Math.random() * (max - min + 1)) + min) % 2
+                , newLocation;
+            newLocation = variant === 0
+                ? _settings['a_url']
+                : _settings['b_url'];
+
+            _redirect(_extractUri(newLocation));
+        },
+
+        /**
+         * Обрабатывает показ варианта
+         */
+        handleVariant: function(variant) {
+            // Запоминаем какой вариант был просмотрен
+            cookie.set(COOKIE_KEY, variant);
+
+            // отправить данные о просмотре варианта
+            _requestServer(ROOT_URL + 'grab-data', {
+                action: 'show'
+                , variant: variant
+                , id: self.id
+            });
+        },
+
+        /**
+         * Отправляет результат показа
+         */
+        handleSuccess: function() {
+            var variant = cookie.get(COOKIE_KEY);
+            _requestServer(ROOT_URL + 'grab-data', {
+                action: 'success'
+                , variant: variant
+                , id: self.id
+            });
+        }
 	};
 
 	// создадим глобальный объект AbTest
