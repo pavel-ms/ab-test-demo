@@ -135,7 +135,6 @@
             self
                 .getSettings()
                 .then(function() {
-                    console.log('process ab test');
                     self.processAbTest();
                 });
 		},
@@ -186,6 +185,7 @@
             if (_settings.bootstrap_url.indexOf(currentDomain) === -1) {
                 throw "AB-Test: Wrong domain";
             }
+            console.log('Action: '+self.getAction());
             switch(self.getAction()) {
                 case(BOOTSTRAP_PAGE):
                     self.goToVariant();
