@@ -182,9 +182,9 @@
         processAbTest: function() {
             console.log('process 1');
             var currentDomain = w.location.host;
-            if (_settings.bootstrap_url.indexOf(currentDomain) === -1) {
-                throw "AB-Test: Wrong domain";
-            }
+            //if (_settings.bootstrap_url.indexOf(currentDomain) === -1) {
+            //    throw "AB-Test: Wrong domain";
+            //}
             console.log('process 2');
             console.log('Action: '+self.getAction());
             switch(self.getAction()) {
