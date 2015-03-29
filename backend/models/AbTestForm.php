@@ -42,7 +42,7 @@ class AbTestForm extends Model
 				, 'message' => 'Это поле должно быть валидным доменным именем, например example.com'
 			],
 			[['bootstrap_url', 'a_url', 'b_url', 'success_url'], 'match'
-				, 'pattern' => "/^\/[-?:&=/\w\d]*$/"  // Упращенный вариант проверки валидности uri
+				, 'pattern' => "/^\/[-?:&=.,/\w\d]*$/"  // Упращенный вариант проверки валидности uri
 				, 'message' => 'Это поле должно быть валидным uri, например /test/a'
 			]
 		];
