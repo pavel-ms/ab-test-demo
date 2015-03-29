@@ -7,7 +7,7 @@
 	var Q = null
 		, cookie = null;
 
-    var ROOT_URL = '//ab-test.tut/analytics/';
+    var ROOT_URL = '//calm-meadow-1664.herokuapp.com/index.php?r=analytics/';
     var COOKIE_KEY = '$$__ab_test_variant';
 
     var BOOTSTRAP_PAGE = 'bootstrap';
