@@ -80,9 +80,9 @@
      */
     var _extractUri = function(url) {
         return url
-            .replace(w.location.protocol, '')
-            //.replace(':' + w.location.port, '')
-            .replace(w.location.host, '');
+            .replace(w.location.protocol+'//', '')
+            .replace(':' + w.location.port, '')
+            .replace(w.location.hostname, '');
     };
 
     /**
