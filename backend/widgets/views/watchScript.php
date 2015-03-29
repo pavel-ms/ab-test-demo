@@ -5,7 +5,7 @@ echo Html::encode('
 	<script type="application/javascript">
 		(function(w) {
 			if (typeof w.$__Ab_Test === "function") {
-				w.$__ab_Test = new w.$__Ab_Test({id: 1});
+				w.$__ab_Test = new w.$__Ab_Test({id: ' . $abTest->id . '});
 			}
 		})(window);
 	</script>
