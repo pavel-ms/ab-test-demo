@@ -6,7 +6,7 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
 
-        'urlManager' => [
+        /*'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -26,6 +26,6 @@ return [
                 '<module:\w+>/<controller:\w+>' => '<module>/<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>'
             ],
-        ],
+        ],*/
     ],
 ];
