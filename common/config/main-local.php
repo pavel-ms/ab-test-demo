@@ -4,9 +4,9 @@ $config = [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=ab-test',
-            'username' => 'root',
-            'password' => '310791',
+            'dsn' => 'mysql:host=us-cdbr-iron-east-02.cleardb.net;dbname=heroku_00b38916f2b7e87',
+            'username' => 'ba92bc7ab46c19',
+            'password' => 'fa55c4b7',
             'charset' => 'utf8',
         ],
         'mailer' => [
@@ -20,7 +20,7 @@ $config = [
     ],
 ];
 
-$db = parse_url(getenv("CLEARDB_DATABASE_URL"));
+/*$db = parse_url(getenv("CLEARDB_DATABASE_URL"));
 if ($db) {
     $config['components']['db'] = [
         'class' => 'yii\db\Connection',
@@ -29,6 +29,6 @@ if ($db) {
         'password' => $db["pass"],
         'charset' => 'utf8',
     ];
-}
+}*/
 
 return $config;
