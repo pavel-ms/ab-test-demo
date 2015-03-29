@@ -160,6 +160,8 @@
          */
         getAction: function() {
             var uri = w.location.pathname;
+            console.log('url:');
+            console.log(_extractUri(_settings['bootstrap_url']));
 
             if (uri === _extractUri(_settings['bootstrap_url'])) {
                 return BOOTSTRAP_PAGE;
@@ -197,6 +199,7 @@
                     self.handleSuccess();
                     break;
                 default:
+                    console.log('no action');
                     break;
             }
         },
