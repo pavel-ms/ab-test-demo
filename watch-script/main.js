@@ -135,6 +135,7 @@
             self
                 .getSettings()
                 .then(function() {
+                    console.log('process ab test');
                     self.processAbTest();
                 });
 		},
