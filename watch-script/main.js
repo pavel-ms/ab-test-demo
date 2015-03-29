@@ -180,11 +180,12 @@
          * Process work
          */
         processAbTest: function() {
-            // 1. определить текущий url и если один из необходимых, то запустить соответствующию функ
+            console.log('process 1');
             var currentDomain = w.location.host;
             if (_settings.bootstrap_url.indexOf(currentDomain) === -1) {
                 throw "AB-Test: Wrong domain";
             }
+            console.log('process 2');
             console.log('Action: '+self.getAction());
             switch(self.getAction()) {
                 case(BOOTSTRAP_PAGE):
