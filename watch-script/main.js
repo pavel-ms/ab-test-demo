@@ -68,13 +68,8 @@
 		// создадим GET строку запроса
         data['cb'] = callbackName;
         params = _buildQueryString(data);
-		/*for (var d in data) {
-			params += (d + '=' + data[d]);
-		}*/
-		/*params === ''
-			? params = 'cb=' + callbackName
-			: params += '&cb=' + callbackName;*/
-		s.src = url + '?' + params;
+
+		s.src = url + '&' + params;
 
 		return dfr.promise;
 	};
