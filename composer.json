@@ -36,6 +36,4 @@
             "bower-asset-library": "vendor/bower"
         }
     }
-
-    "post-install-cmd": ["chmod -R 777 /app/backend"]
 }
