@@ -13,7 +13,7 @@ class m150327_070813_db_creation extends Migration
 		$this->execute('
 			CREATE TABLE `enum` (
 				`id` INT(11) NOT NULL AUTO_INCREMENT,
-				`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+				`created_at` DATETIME,
 				`updated_at` DATETIME,
 				`parent` INT(11) NULL DEFAULT NULL,
 				`name` CHAR(120) NOT NULL,
@@ -30,7 +30,7 @@ class m150327_070813_db_creation extends Migration
 		$this->execute('
 			CREATE TABLE `ab_test` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+				`created_at` DATETIME,
 				`updated_at` DATETIME,
 				`name` varchar(255) NOT NULL,
 				`user_id` int(11),
@@ -51,7 +51,7 @@ class m150327_070813_db_creation extends Migration
 		$this->execute('
 			CREATE TABLE `test_action` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
-				`created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+				`created_at` DATETIME,
 				`updated_at` DATETIME,
 				`action_type` int(11),
 				`variant` int(11),
