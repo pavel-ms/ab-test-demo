@@ -6,19 +6,19 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
 
-        /*'urlManager' => [
+        'urlManager' => [
             'class' => 'yii\web\UrlManager',
-            'enablePrettyUrl' => true,
+            /*'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>' => '<module>/<controller>/index',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>'
-            ],
+            ],*/
         ],
 
-        'urlManagerFrontend' => [
+        /*'urlManagerFrontend' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'rules' => [
