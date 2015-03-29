@@ -81,7 +81,7 @@
     var _extractUri = function(url) {
         return url
             .replace(w.location.protocol, '')
-            .replace(':' + w.location.port, '')
+            //.replace(':' + w.location.port, '')
             .replace(w.location.host, '');
     };
 
@@ -180,12 +180,10 @@
          * Process work
          */
         processAbTest: function() {
-            console.log('process 1');
             var currentDomain = w.location.host;
             //if (_settings.bootstrap_url.indexOf(currentDomain) === -1) {
             //    throw "AB-Test: Wrong domain";
             //}
-            console.log('process 2');
             console.log('Action: '+self.getAction());
             switch(self.getAction()) {
                 case(BOOTSTRAP_PAGE):
