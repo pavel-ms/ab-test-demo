@@ -80,7 +80,7 @@
      */
     var _extractUri = function(url) {
         return url
-            .replace(w.location.protocol+'//', '')
+            .replace(w.location.protocol + '//', '')
             .replace(':' + w.location.port, '')
             .replace(w.location.hostname, '');
     };
@@ -147,7 +147,6 @@
             _requestServer(ROOT_URL+'settings', {id: self.id})
                 .then(function(res) {
                     _settings = res;
-                    console.dir(_settings);
                     dfr.resolve();
                 }, function() { dfr.reject(); });
 
@@ -160,8 +159,6 @@
          */
         getAction: function() {
             var uri = w.location.pathname;
-            console.log('url:');
-            console.log(_extractUri(_settings['bootstrap_url']));
 
             if (uri === _extractUri(_settings['bootstrap_url'])) {
                 return BOOTSTRAP_PAGE;
@@ -184,7 +181,6 @@
             //if (_settings.bootstrap_url.indexOf(currentDomain) === -1) {
             //    throw "AB-Test: Wrong domain";
             //}
-            console.log('Action: '+self.getAction());
             switch(self.getAction()) {
                 case(BOOTSTRAP_PAGE):
                     self.goToVariant();
